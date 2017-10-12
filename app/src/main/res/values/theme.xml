@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="MainAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/indigo_teal_primary</item>
+        <item name="colorPrimaryDark">@color/indigo_teal_primary_dark</item>
+        <item name="colorAccent">@color/indigo_teal_accent</item>
+    </style>
+
+    <style name="MainAppTheme.Alt">
+        <item name="colorPrimary">@color/brown_amber_primary</item>
+        <item name="colorPrimaryDark">@color/brown_amber_primary_dark</item>
+        <item name="colorAccent">@color/brown_amber_accent</item>
+    </style>
+
+</resources>
