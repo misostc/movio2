@@ -3,4 +3,7 @@
     <string name="menu_label_saved">Saved</string>
     <string name="menu_label_change_theme">Change theme</string>
     <string name="this_week_opening">This week opening</string>
+    <string name="title_film_list">Films</string>
+    <string name="title_film_detail">Film Detail</string>
+    <string name="no_films">There are no films. Please, connect to the internet and try again.</string>
 </resources>

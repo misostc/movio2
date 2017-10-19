@@ -3,19 +3,32 @@
     package="cz.muni.fi.pv256.movio2.uco_410434">
 
     <application
-        android:name="cz.muni.fi.pv256.movio2.uco_410434.Movio2Application"
+        android:name=".Movio2Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MainAppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.FilmListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/MainAppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.FilmDetailActivity"
+            android:label="@string/title_film_detail"
+            android:parentActivityName=".ui.FilmListActivity"
+            android:theme="@style/MainAppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cz.muni.fi.pv256.movio2.uco_410434.ui.FilmListActivity" />
         </activity>
     </application>
 
