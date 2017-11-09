@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_label_change_theme">テーマを変更する</string>
+    <string name="menu_label_saved">保存</string>
+    <string name="no_films">映画は利用できません。 インターネットに接続してもう一度お試しください。</string>
+    <string name="this_week_opening">今週の新</string>
+    <string name="title_film_detail">映画の詳細</string>
+    <string name="title_film_list">ムービー</string>
+</resources>

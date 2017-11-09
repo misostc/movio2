@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_label_change_theme">Zmeniť motív</string>
+    <string name="menu_label_saved">Uložené</string>
+    <string name="no_films">Žiadne filmy nie sú k dispozícií. Prosím, pripojte sa na internet a skúste znova.</string>
+    <string name="this_week_opening">Nové tento týždeň</string>
+    <string name="title_film_detail">Detail filmu</string>
+    <string name="title_film_list">Filmy</string>
+</resources>

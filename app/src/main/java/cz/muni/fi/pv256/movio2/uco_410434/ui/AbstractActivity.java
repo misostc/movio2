@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import cz.muni.fi.pv256.movio2.uco_410434.BuildConfig;
 import cz.muni.fi.pv256.movio2.uco_410434.R;
 
 
@@ -22,10 +23,18 @@ public abstract class AbstractActivity extends AppCompatActivity {
     private void setAlternativeTheme() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
         boolean isAlternativeTheme = sharedPreferences.getBoolean(IS_ALTERNATIVE_THEME, false);
+        if (isAlternativeFlavor()) {
+            //flip the value
+            isAlternativeTheme = !isAlternativeTheme;
+        }
         if (isAlternativeTheme) {
             setTheme(R.style.MainAppTheme_Alt);
         } else {
             setTheme(R.style.MainAppTheme);
         }
+    }
+
+    public boolean isAlternativeFlavor() {
+        return BuildConfig.FLAVOR.equals("alternative");
     }
 }
