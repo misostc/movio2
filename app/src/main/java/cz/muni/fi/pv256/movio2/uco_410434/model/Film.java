@@ -17,31 +17,31 @@ public class Film implements FilmsListItem, Parcelable {
         }
     };
     private final String title;
-    private final float rating;
-    private final int imageResource;
+    private final double rating;
+    private final String imageUri;
 
-    public Film(String title, float rating, int imageResource) {
+    public Film(String title, double rating, String imageUri) {
         this.title = title;
         this.rating = rating;
-        this.imageResource = imageResource;
+        this.imageUri = imageUri;
     }
 
     protected Film(Parcel in) {
         this.title = in.readString();
-        this.rating = in.readFloat();
-        this.imageResource = in.readInt();
+        this.rating = in.readDouble();
+        this.imageUri = in.readString();
     }
 
     public String getTitle() {
         return title;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public String getImageUri() {
+        return imageUri;
     }
 
     @Override
@@ -52,7 +52,16 @@ public class Film implements FilmsListItem, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
-        dest.writeFloat(this.rating);
-        dest.writeInt(this.imageResource);
+        dest.writeDouble(this.rating);
+        dest.writeString(this.imageUri);
+    }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "title='" + title + '\'' +
+                ", rating=" + rating +
+                ", imageUri='" + imageUri + '\'' +
+                '}';
     }
 }

@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import cz.muni.fi.pv256.movio2.uco_410434.R;
 import cz.muni.fi.pv256.movio2.uco_410434.model.Film;
@@ -47,16 +51,45 @@ public class FilmDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_film_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_film_detail, container, false);
 
         if (item != null) {
-            ((ImageView) rootView.findViewById(R.id.film_image)).setImageResource(item.getImageResource());
-            ((TextView) rootView.findViewById(R.id.film_title)).setText(item.getTitle());
-            ((AppCompatRatingBar) rootView.findViewById(R.id.film_rating)).setRating(item.getRating());
-            FilmPosterColorUtil.setBackgroundColor(getContext(), item.getImageResource(), rootView.findViewById(R.id.title_container));
+            final ImageView imageView = rootView.findViewById(R.id.film_image);
+            final View titleContainer = rootView.findViewById(R.id.title_container);
+            final TextView filmTitle = rootView.findViewById(R.id.film_title);
+            final AppCompatRatingBar filmRating = rootView.findViewById(R.id.film_rating);
+
+            imageView.setImageDrawable(null);
+            fallbackBGColor(titleContainer, imageView);
+            if (item.getImageUri() != null) {
+                Picasso
+                        .with(getContext())
+                        .load(item.getImageUri())
+                        .placeholder(R.color.indigo_teal_primary)
+                        .into(imageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                FilmPosterColorUtil.setBackgroundColor(getContext(), imageView.getDrawable(), titleContainer);
+                            }
+
+                            @Override
+                            public void onError() {
+                                Log.e(TAG, "Could not load image " + item.getImageUri());
+                                fallbackBGColor(titleContainer, imageView);
+                            }
+                        });
+            }
+
+            filmTitle.setText(item.getTitle());
+            filmRating.setRating((float) item.getRating());
         }
 
         return rootView;
+    }
+
+    private void fallbackBGColor(View titleContainer, ImageView imageView) {
+        titleContainer.setBackgroundColor(getResources().getColor(R.color.indigo_teal_primary_dark));
+        imageView.setBackgroundColor(getResources().getColor(R.color.indigo_teal_primary));
     }
 
 }

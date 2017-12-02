@@ -3,6 +3,8 @@ package cz.muni.fi.pv256.movio2.uco_410434;
 import android.app.Application;
 import android.os.StrictMode;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 public class Movio2Application extends Application {
 
     @Override
@@ -21,6 +23,7 @@ public class Movio2Application extends Application {
                     .penaltyDeath()
                     .build());
         }
+        JodaTimeAndroid.init(this);
         super.onCreate();
     }
 

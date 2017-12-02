@@ -2,13 +2,14 @@ package cz.muni.fi.pv256.movio2.uco_410434.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 
 public class FilmPosterColorUtil {
-    public static void setBackgroundColor(Context context, int imageResource, final View view) {
-        Bitmap myBitmap = BitmapFactory.decodeResource(context.getResources(), imageResource);
+    public static void setBackgroundColor(Context context, Drawable drawable, final View view) {
+        Bitmap myBitmap = ((BitmapDrawable) drawable).getBitmap();
         if (myBitmap != null && !myBitmap.isRecycled()) {
             Palette.PaletteAsyncListener listener = new Palette.PaletteAsyncListener() {
                 @Override
