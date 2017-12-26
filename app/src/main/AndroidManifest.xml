@@ -33,6 +33,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.FilmListActivity" />
         </activity>
+
+        <service android:name=".service.FilmsDownloadService" />
     </application>
 
 </manifest>

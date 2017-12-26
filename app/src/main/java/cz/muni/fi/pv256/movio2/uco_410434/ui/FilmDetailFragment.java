@@ -61,10 +61,10 @@ public class FilmDetailFragment extends Fragment {
 
             imageView.setImageDrawable(null);
             fallbackBGColor(titleContainer, imageView);
-            if (item.getImageUri() != null) {
+            if (item.getBackdropPath() != null) {
                 Picasso
                         .with(getContext())
-                        .load(item.getImageUri())
+                        .load(item.getBackdropURL())
                         .placeholder(R.color.indigo_teal_primary)
                         .into(imageView, new Callback() {
                             @Override
@@ -74,14 +74,14 @@ public class FilmDetailFragment extends Fragment {
 
                             @Override
                             public void onError() {
-                                Log.e(TAG, "Could not load image " + item.getImageUri());
+                                Log.e(TAG, "Could not load image " + item.getBackdropPath());
                                 fallbackBGColor(titleContainer, imageView);
                             }
                         });
             }
 
             filmTitle.setText(item.getTitle());
-            filmRating.setRating((float) item.getRating());
+            filmRating.setRating((float) item.getVoteAverage());
         }
 
         return rootView;
