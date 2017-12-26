@@ -1,4 +1,4 @@
-package cz.muni.fi.pv256.movio2.uco_410434.service;
+package cz.muni.fi.pv256.movio2.uco_410434.util;
 
 import android.os.Handler;
 import android.os.Looper;

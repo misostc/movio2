@@ -1,7 +1,11 @@
 package cz.muni.fi.pv256.movio2.uco_410434.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.util.Log;
@@ -15,6 +19,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import cz.muni.fi.pv256.movio2.uco_410434.R;
+import cz.muni.fi.pv256.movio2.uco_410434.data.PersistedFilmManager;
 import cz.muni.fi.pv256.movio2.uco_410434.model.Film;
 
 public class FilmDetailFragment extends Fragment {
@@ -23,6 +28,15 @@ public class FilmDetailFragment extends Fragment {
     public static final String ARG_ITEM = "arg_item_film";
 
     private Film item;
+    private ImageView imageView;
+    private View titleContainer;
+    private TextView filmTitle;
+    private AppCompatRatingBar filmRating;
+    private TextView releaseDateView;
+    private FloatingActionButton actionButton;
+    private PersistedFilmManager filmManager;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     public FilmDetailFragment() {
     }
@@ -52,13 +66,16 @@ public class FilmDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_film_detail, container, false);
+        imageView = rootView.findViewById(R.id.film_image);
+        titleContainer = rootView.findViewById(R.id.title_container);
+        filmTitle = rootView.findViewById(R.id.film_title);
+        filmRating = rootView.findViewById(R.id.film_rating);
+        releaseDateView = rootView.findViewById(R.id.relase_date_value);
+        actionButton = rootView.findViewById(R.id.save_button);
+
+        filmManager = new PersistedFilmManager(getContext());
 
         if (item != null) {
-            final ImageView imageView = rootView.findViewById(R.id.film_image);
-            final View titleContainer = rootView.findViewById(R.id.title_container);
-            final TextView filmTitle = rootView.findViewById(R.id.film_title);
-            final AppCompatRatingBar filmRating = rootView.findViewById(R.id.film_rating);
-
             imageView.setImageDrawable(null);
             fallbackBGColor(titleContainer, imageView);
             if (item.getBackdropPath() != null) {
@@ -82,9 +99,65 @@ public class FilmDetailFragment extends Fragment {
 
             filmTitle.setText(item.getTitle());
             filmRating.setRating((float) item.getVoteAverage());
+            releaseDateView.setText(item.getReleaseDate().toLocalDate().toString());
+
+            if (item.getId() == null) {
+                actionButton.setImageResource(R.drawable.icon_save);
+                actionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        view.setEnabled(false);
+                        view.setAlpha(0.5f);
+                        saveFilm(item);
+                        actionButton.hide();
+                    }
+                });
+            } else {
+                actionButton.setImageResource(R.drawable.icon_delete);
+                actionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        view.setEnabled(false);
+                        view.setAlpha(0.5f);
+                        deleteFilm(item);
+                    }
+                });
+            }
         }
 
         return rootView;
+    }
+
+    private void deleteFilm(final Film item) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                filmManager.deleteFilm(item);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        actionButton.hide();
+                    }
+                });
+                return null;
+            }
+        }.execute();
+    }
+
+    private void saveFilm(final Film item) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                filmManager.createFilm(item);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        actionButton.hide();
+                    }
+                });
+                return null;
+            }
+        }.execute();
     }
 
     private void fallbackBGColor(View titleContainer, ImageView imageView) {

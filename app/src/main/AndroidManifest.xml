@@ -35,6 +35,10 @@
         </activity>
 
         <service android:name=".service.FilmsDownloadService" />
+        <provider
+            android:name=".data.FilmProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false" />
     </application>
 
 </manifest>

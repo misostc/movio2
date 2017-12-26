@@ -17,7 +17,7 @@ import cz.muni.fi.pv256.movio2.uco_410434.model.Category;
 import cz.muni.fi.pv256.movio2.uco_410434.model.EmptyListItem;
 import cz.muni.fi.pv256.movio2.uco_410434.model.Film;
 import cz.muni.fi.pv256.movio2.uco_410434.model.FilmsListItem;
-import cz.muni.fi.pv256.movio2.uco_410434.ui.FilmListFragment;
+import cz.muni.fi.pv256.movio2.uco_410434.ui.AbstractFilmListFragment;
 import cz.muni.fi.pv256.movio2.uco_410434.ui.FilmPosterColorUtil;
 
 public class FilmsAdapter extends RecyclerView.Adapter<FilmsAdapter.ViewHolder> {
@@ -25,10 +25,10 @@ public class FilmsAdapter extends RecyclerView.Adapter<FilmsAdapter.ViewHolder> 
     private static final int FILM = 0, CATEGORY = 1, EMPTY = 2;
     private static final String TAG = FilmsAdapter.class.getSimpleName();
 
-    private FilmListFragment filmListFragment;
+    private AbstractFilmListFragment filmListFragment;
     private FilmsListItem[] items;
 
-    public FilmsAdapter(FilmListFragment filmListFragment, FilmsListItem[] items) {
+    public FilmsAdapter(AbstractFilmListFragment filmListFragment, FilmsListItem[] items) {
         this.filmListFragment = filmListFragment;
         this.items = items;
     }

@@ -29,6 +29,7 @@ import cz.muni.fi.pv256.movio2.uco_410434.R;
 import cz.muni.fi.pv256.movio2.uco_410434.manager.FilmManager;
 import cz.muni.fi.pv256.movio2.uco_410434.model.Film;
 import cz.muni.fi.pv256.movio2.uco_410434.model.FilmWrapper;
+import cz.muni.fi.pv256.movio2.uco_410434.util.MainThreadBus;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Converter;
