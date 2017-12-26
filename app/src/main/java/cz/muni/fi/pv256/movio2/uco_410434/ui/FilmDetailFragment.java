@@ -1,6 +1,5 @@
 package cz.muni.fi.pv256.movio2.uco_410434.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -20,15 +19,18 @@ public class FilmDetailFragment extends Fragment {
     public static final String ARG_ITEM = "arg_item_film";
 
     private Film item;
-    private Context context;
 
     public FilmDetailFragment() {
     }
 
+    public static FilmDetailFragment newInstance() {
+        return new FilmDetailFragment();
+    }
+
     public static FilmDetailFragment newInstance(Film film) {
-        FilmDetailFragment fragment = new FilmDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_ITEM, film);
+        FilmDetailFragment fragment = newInstance();
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,8 +38,6 @@ public class FilmDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        context = getActivity().getApplicationContext();
         if (getArguments() != null && getArguments().containsKey(ARG_ITEM)) {
             Parcelable input = getArguments().getParcelable(ARG_ITEM);
             item = (Film) input;
@@ -53,7 +53,7 @@ public class FilmDetailFragment extends Fragment {
             ((ImageView) rootView.findViewById(R.id.film_image)).setImageResource(item.getImageResource());
             ((TextView) rootView.findViewById(R.id.film_title)).setText(item.getTitle());
             ((AppCompatRatingBar) rootView.findViewById(R.id.film_rating)).setRating(item.getRating());
-            FilmPosterColorUtil.setBackgroundColor(context, item.getImageResource(), rootView.findViewById(R.id.title_container));
+            FilmPosterColorUtil.setBackgroundColor(getContext(), item.getImageResource(), rootView.findViewById(R.id.title_container));
         }
 
         return rootView;

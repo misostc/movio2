@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import cz.muni.fi.pv256.movio2.uco_410434.model.FilmsListItem;
 
 public class FilmListFragment extends Fragment {
 
-    private static final String TAG = FilmListFragment.class.getSimpleName();
+    public static final String TAG = FilmListFragment.class.getSimpleName();
 
     private Context context;
     private OnFilmSelectListener filmSelectListener;
@@ -42,6 +41,12 @@ public class FilmListFragment extends Fragment {
         filmList.add(new Film("Casablanca", 3.4f, R.mipmap.casablanca));
     }
 
+    public static FilmListFragment newInstance(OnFilmSelectListener listener) {
+        FilmListFragment instance = new FilmListFragment();
+        instance.filmSelectListener = listener;
+        return instance;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,23 +54,11 @@ public class FilmListFragment extends Fragment {
         context = getActivity().getApplicationContext();
     }
 
-
-    @Override
-    public void onAttach(Context activity) {
-        super.onAttach(activity);
-
-        try {
-            filmSelectListener = (OnFilmSelectListener) activity;
-        } catch (ClassCastException e) {
-            Log.e(TAG, "Activity must implement OnFilmSelectListener", e);
-        }
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
 
-        filmSelectListener = null; //Avoid leaking the Activity
+        filmSelectListener = null;
     }
 
     @Nullable
@@ -77,9 +70,7 @@ public class FilmListFragment extends Fragment {
     }
 
     private void fillListView(View view) {
-
         filmListView = view.findViewById(R.id.listview_films);
-
         LinearLayoutManager filmsLayoutManager = new LinearLayoutManager(context);
         filmListView.setLayoutManager(filmsLayoutManager);
 
@@ -124,7 +115,7 @@ public class FilmListFragment extends Fragment {
                             .inflate(R.layout.film_list_empty_item, parent, false);
                     break;
                 default:
-                    return null;
+                    throw new IllegalArgumentException("Unexpected viewType: " + viewType);
             }
             return new ViewHolder(v);
         }
@@ -162,9 +153,15 @@ public class FilmListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            if (items[position] instanceof Film) return FILM;
-            if (items[position] instanceof Category) return CATEGORY;
-            if (items[position] instanceof EmptyListItem) return EMPTY;
+            if (items[position] instanceof Film) {
+                return FILM;
+            }
+            if (items[position] instanceof Category) {
+                return CATEGORY;
+            }
+            if (items[position] instanceof EmptyListItem) {
+                return EMPTY;
+            }
             return 0;
         }
 

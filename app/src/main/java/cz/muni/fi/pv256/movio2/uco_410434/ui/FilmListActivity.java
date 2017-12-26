@@ -19,11 +19,17 @@ public class FilmListActivity extends AbstractActivity implements FilmListFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_list);
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.film_list_container, FilmListFragment.newInstance(this), FilmListFragment.TAG)
+                    .commit();
+        }
+
         if (findViewById(R.id.film_detail_container) != null) {
             twoPane = true;
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.film_detail_container, new FilmDetailFragment(), FilmDetailFragment.TAG)
+                        .replace(R.id.film_detail_container, FilmDetailFragment.newInstance(), FilmDetailFragment.TAG)
                         .commit();
             }
         }
