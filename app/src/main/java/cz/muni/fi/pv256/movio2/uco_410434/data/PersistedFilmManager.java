@@ -76,6 +76,7 @@ public class PersistedFilmManager {
         values.put(FilmEntry.COLUMN_RELEASE_DATE_TEXT, FilmContract.getDbDateString(film.getReleaseDate()));
         values.put(FilmEntry.COLUMN_VOTE_AVERAGE_TEXT, Double.toString(film.getVoteAverage()));
         values.put(FilmEntry.COLUMN_BACKDROP_PATH_TEXT, film.getBackdropPath());
+        values.put(FilmEntry.COLUMN_EXTERNAL_ID, film.getExternalId());
         return values;
     }
 
@@ -86,6 +87,7 @@ public class PersistedFilmManager {
         film.setReleaseDate(FilmContract.getDateFromDb(cursor.getString(FilmEntry.COL_FILM_RELEASE_DATE)));
         film.setVoteAverage(Double.parseDouble(cursor.getString(FilmEntry.COL_FILM_VOTE_AVERAGE)));
         film.setBackdropPath(cursor.getString(FilmEntry.COL_FILM_BACKDROP_PATH));
+        film.setExternalId(cursor.getLong(FilmEntry.COL_FILM_EXTERNAL_ID));
         return film;
     }
 }

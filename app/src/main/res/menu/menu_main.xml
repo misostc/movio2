@@ -12,4 +12,9 @@
         android:id="@+id/change_theme"
         android:title="@string/menu_label_change_theme"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/menu_label_refresh"
+        app:showAsAction="never" />
 </menu>

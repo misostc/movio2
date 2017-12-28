@@ -1,5 +1,7 @@
 package cz.muni.fi.pv256.movio2.uco_410434.ui;
 
+import android.accounts.Account;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +14,11 @@ import android.widget.CompoundButton;
 
 import cz.muni.fi.pv256.movio2.uco_410434.R;
 import cz.muni.fi.pv256.movio2.uco_410434.model.Film;
+import cz.muni.fi.pv256.movio2.uco_410434.sync.UpdaterSyncAdapter;
 
 public class FilmListActivity extends AbstractActivity implements AbstractFilmListFragment.OnFilmSelectListener {
+
+    public static final String EXTRA_OPEN_ON_SAVED = "openOnSaved";
 
     private static final String TAG = FilmListActivity.class.getSimpleName();
     private boolean twoPane;
@@ -36,6 +41,8 @@ public class FilmListActivity extends AbstractActivity implements AbstractFilmLi
                         .commit();
             }
         }
+
+        UpdaterSyncAdapter.initializeSyncAdapter(this);
     }
 
     @Override
@@ -54,6 +61,12 @@ public class FilmListActivity extends AbstractActivity implements AbstractFilmLi
                 handlePersistedSwitch(isChecked);
             }
         });
+
+        boolean openOnSaved = getIntent().getBooleanExtra(EXTRA_OPEN_ON_SAVED, false);
+        if (openOnSaved) {
+            switchView.setChecked(true);
+        }
+
         return true;
     }
 
@@ -86,9 +99,28 @@ public class FilmListActivity extends AbstractActivity implements AbstractFilmLi
                 changeActiveTheme();
                 restartActivity();
                 return true;
+            case R.id.refresh:
+                requestSync();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void requestSync() {
+        // Pass the settings flags by inserting them in a bundle
+        Bundle settingsBundle = new Bundle();
+        settingsBundle.putBoolean(
+                ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        settingsBundle.putBoolean(
+                ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        /*
+         * Request the sync for the default account, authority, and
+         * manual sync settings
+         */
+        Account mAccount = UpdaterSyncAdapter.getSyncAccount(this);
+        String authority = getString(R.string.content_authority);
+        ContentResolver.requestSync(mAccount, authority, settingsBundle);
     }
 
     private void changeActiveTheme() {

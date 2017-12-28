@@ -46,6 +46,7 @@ class FilmContract {
         public static final String COLUMN_RELEASE_DATE_TEXT = "release_date";
         public static final String COLUMN_VOTE_AVERAGE_TEXT = "vote_average";
         public static final String COLUMN_BACKDROP_PATH_TEXT = "backdrop_path";
+        public static final String COLUMN_EXTERNAL_ID = "external_id";
 
 
         public static final String[] FILM_COLUMNS = {
@@ -53,7 +54,8 @@ class FilmContract {
                 COLUMN_NAME_TEXT,
                 COLUMN_RELEASE_DATE_TEXT,
                 COLUMN_VOTE_AVERAGE_TEXT,
-                COLUMN_BACKDROP_PATH_TEXT
+                COLUMN_BACKDROP_PATH_TEXT,
+                COLUMN_EXTERNAL_ID
         };
 
         public static final int COL_FILM_ID = 0;
@@ -61,6 +63,7 @@ class FilmContract {
         public static final int COL_FILM_RELEASE_DATE = 2;
         public static final int COL_FILM_VOTE_AVERAGE = 3;
         public static final int COL_FILM_BACKDROP_PATH = 4;
+        public static final int COL_FILM_EXTERNAL_ID = 5;
 
 
         public static Uri buildFilmUri(long id) {

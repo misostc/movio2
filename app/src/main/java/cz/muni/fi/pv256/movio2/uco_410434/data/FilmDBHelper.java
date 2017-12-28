@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry.COLUMN_BACKDROP_PATH_TEXT;
+import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry.COLUMN_EXTERNAL_ID;
 import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry.COLUMN_NAME_TEXT;
 import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry.COLUMN_RELEASE_DATE_TEXT;
 import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry.COLUMN_VOTE_AVERAGE_TEXT;
@@ -14,7 +15,7 @@ import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry._ID
 class FilmDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "films.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public FilmDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,7 +28,8 @@ class FilmDBHelper extends SQLiteOpenHelper {
                 COLUMN_NAME_TEXT + " TEXT NOT NULL, " +
                 COLUMN_RELEASE_DATE_TEXT + " TEXT," +
                 COLUMN_VOTE_AVERAGE_TEXT + " TEXT," +
-                COLUMN_BACKDROP_PATH_TEXT + " TEXT" +
+                COLUMN_BACKDROP_PATH_TEXT + " TEXT," +
+                COLUMN_EXTERNAL_ID + " INTEGER UNIQUE" +
                 " );");
     }
 
