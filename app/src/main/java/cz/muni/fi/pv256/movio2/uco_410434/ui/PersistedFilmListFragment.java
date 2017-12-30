@@ -21,7 +21,7 @@ public class PersistedFilmListFragment extends AbstractFilmListFragment {
         super.onStart();
 
         if (filmList.isEmpty()) {
-            filmsManager = new PersistedFilmManager(getContext());
+            filmsManager = new PersistedFilmManager(getContext().getContentResolver());
             new LoadFilmsAsyncTask().execute();
         }
     }

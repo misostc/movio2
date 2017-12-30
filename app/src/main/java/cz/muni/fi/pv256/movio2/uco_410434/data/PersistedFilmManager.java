@@ -1,8 +1,8 @@
 package cz.muni.fi.pv256.movio2.uco_410434.data;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
@@ -16,10 +16,10 @@ import static cz.muni.fi.pv256.movio2.uco_410434.data.FilmContract.FilmEntry;
 public class PersistedFilmManager {
 
     private static final String WHERE_ID = FilmEntry._ID + " = ?";
-    private Context mContext;
+    private ContentResolver contentResolver;
 
-    public PersistedFilmManager(Context context) {
-        mContext = context.getApplicationContext();
+    public PersistedFilmManager(ContentResolver contentResolver) {
+        this.contentResolver = contentResolver;
     }
 
     public void createFilm(Film film) {
@@ -35,11 +35,11 @@ public class PersistedFilmManager {
         if (film.getReleaseDate() == null) {
             throw new IllegalStateException("film release date cannot be null");
         }
-        film.setId(ContentUris.parseId(mContext.getContentResolver().insert(FilmEntry.CONTENT_URI, prepareFilmValues(film))));
+        film.setId(ContentUris.parseId(contentResolver.insert(FilmEntry.CONTENT_URI, prepareFilmValues(film))));
     }
 
     public List<Film> getFilms() {
-        Cursor cursor = mContext.getContentResolver().query(FilmEntry.CONTENT_URI, FilmEntry.FILM_COLUMNS, "", new String[]{}, null);
+        Cursor cursor = contentResolver.query(FilmEntry.CONTENT_URI, FilmEntry.FILM_COLUMNS, "", new String[]{}, null);
         if (cursor != null && cursor.moveToFirst()) {
             List<Film> films = new ArrayList<>(cursor.getCount());
             try {
@@ -64,7 +64,7 @@ public class PersistedFilmManager {
             throw new IllegalStateException("film id cannot be null");
         }
 
-        mContext.getContentResolver().delete(FilmEntry.CONTENT_URI, WHERE_ID, new String[]{String.valueOf(film.getId())});
+        contentResolver.delete(FilmEntry.CONTENT_URI, WHERE_ID, new String[]{String.valueOf(film.getId())});
     }
 
     private ContentValues prepareFilmValues(Film film) {

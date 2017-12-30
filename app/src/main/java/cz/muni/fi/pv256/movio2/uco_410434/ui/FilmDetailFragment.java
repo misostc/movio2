@@ -73,7 +73,7 @@ public class FilmDetailFragment extends Fragment {
         releaseDateView = rootView.findViewById(R.id.relase_date_value);
         actionButton = rootView.findViewById(R.id.save_button);
 
-        filmManager = new PersistedFilmManager(getContext());
+        filmManager = new PersistedFilmManager(getContext().getContentResolver());
 
         if (item != null) {
             imageView.setImageDrawable(null);
