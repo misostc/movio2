@@ -39,21 +39,24 @@ public class PersistedFilmManager {
     }
 
     public List<Film> getFilms() {
-        Cursor cursor = contentResolver.query(FilmEntry.CONTENT_URI, FilmEntry.FILM_COLUMNS, "", new String[]{}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            List<Film> films = new ArrayList<>(cursor.getCount());
-            try {
+        Cursor cursor = null;
+        try {
+            cursor = contentResolver.query(FilmEntry.CONTENT_URI, FilmEntry.FILM_COLUMNS, "", new String[]{}, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                List<Film> films = new ArrayList<>(cursor.getCount());
                 while (!cursor.isAfterLast()) {
                     films.add(getFilm(cursor));
                     cursor.moveToNext();
                 }
-            } finally {
+
+                return films;
+            }
+            return Collections.emptyList();
+        } finally {
+            if (cursor != null) {
                 cursor.close();
             }
-            return films;
         }
-
-        return Collections.emptyList();
     }
 
     public void deleteFilm(Film film) {

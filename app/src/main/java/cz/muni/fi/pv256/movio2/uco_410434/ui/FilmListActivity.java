@@ -58,6 +58,7 @@ public class FilmListActivity extends AbstractActivity implements AbstractFilmLi
     }
 
     private void handlePersistedSwitch(boolean isChecked) {
+        Log.d(TAG, "handlePersistedSwitch: " + isChecked);
         chosenFragment = null;
         if (isChecked) {
             if (persistedFragment == null) {
@@ -105,6 +106,7 @@ public class FilmListActivity extends AbstractActivity implements AbstractFilmLi
 
     @Override
     public void onFilmSelect(Film film) {
+        Log.d(TAG, "onFilmSelect: " + film);
         if (twoPane) {
             FragmentManager fm = getSupportFragmentManager();
 

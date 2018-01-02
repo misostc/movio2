@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MovieDBService {
-
+    String API_DATE_FORMAT = "yyyy-MM-dd";
 
     @GET("discover/movie?"
             + "sort_by=vote_average.desc"
@@ -22,5 +22,5 @@ public interface MovieDBService {
             + "&include_adult=false"
             + "&include_video=false"
             + "&page=1")
-    Call<List<Film>> getTopRatedSince(@Query("api_key") String apiKey, @Query("language") String language, @Query("release_date.gte") String dateThreshold);
+    Call<List<Film>> getTopRatedSince(@Query("api_key") String apiKey, @Query("language") String language, @Query("release_date.gte") String dateThreshold, @Query("release_date.lte") String todayDate);
 }

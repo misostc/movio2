@@ -72,13 +72,10 @@ public class FilmsAdapter extends RecyclerView.Adapter<FilmsAdapter.ViewHolder> 
                 filmImage.setImageDrawable(null);
                 fallbackBGColor(titleContainer, filmImage);
                 if (currentFilm.getBackdropPath() != null) {
-                    holder.mView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                     Log.i(TAG, "Loading film " + currentFilm.getTitle() + ", image " + currentFilm.getBackdropPath());
                     Picasso
                             .with(filmListFragment.getContext())
                             .load(currentFilm.getBackdropURL())
-                            .resize(holder.mView.getMeasuredWidth(), holder.mView.getMeasuredHeight())
-                            .placeholder(R.color.indigo_teal_primary)
                             .into(filmImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -116,9 +113,15 @@ public class FilmsAdapter extends RecyclerView.Adapter<FilmsAdapter.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (items[position] instanceof Film) return FILM;
-        if (items[position] instanceof Category) return CATEGORY;
-        if (items[position] instanceof EmptyListItem) return EMPTY;
+        if (items[position] instanceof Film) {
+            return FILM;
+        }
+        if (items[position] instanceof Category) {
+            return CATEGORY;
+        }
+        if (items[position] instanceof EmptyListItem) {
+            return EMPTY;
+        }
         return 0;
     }
 

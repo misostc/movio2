@@ -56,7 +56,7 @@ public class FilmsDownloadService extends IntentService {
         try {
             Retrofit retrofit = getRetrofit();
             MovieDBService movieDBService = retrofit.create(MovieDBService.class);
-            Call<List<Film>> loadedLastWeek = movieDBService.getTopRatedSince(BuildConfig.MOVIEDB_API_KEY, Locale.getDefault().toString(), getDateThreshold());
+            Call<List<Film>> loadedLastWeek = movieDBService.getTopRatedSince(BuildConfig.MOVIEDB_API_KEY, Locale.getDefault().toString(), getDateThreshold(), getToday());
             Call<List<Film>> loadedTopRated = movieDBService.getTopRated(BuildConfig.MOVIEDB_API_KEY, Locale.getDefault().toString());
             List<Film> targetListCurrent = FilmManager.getInstance().getFilmsInCinemas();
             List<Film> targetListTop = FilmManager.getInstance().getTopRatedFilms();
@@ -131,7 +131,11 @@ public class FilmsDownloadService extends IntentService {
 
     private String getDateThreshold() {
         LocalDate today = LocalDate.now();
-        return today.withDayOfWeek(DateTimeConstants.MONDAY).minusWeeks(1).toString("yyyy-MM-dd");
+        return today.withDayOfWeek(DateTimeConstants.MONDAY).minusWeeks(1).toString(MovieDBService.API_DATE_FORMAT);
+    }
+
+    private String getToday() {
+        return LocalDate.now().toString(MovieDBService.API_DATE_FORMAT);
     }
 
     private void notifyStart() {
