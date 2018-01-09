@@ -29,7 +29,7 @@ class FilmDBHelper extends SQLiteOpenHelper {
                 COLUMN_RELEASE_DATE_TEXT + " TEXT," +
                 COLUMN_VOTE_AVERAGE_TEXT + " TEXT," +
                 COLUMN_BACKDROP_PATH_TEXT + " TEXT," +
-                COLUMN_EXTERNAL_ID + " INTEGER UNIQUE" +
+                COLUMN_EXTERNAL_ID + " INTEGER" +
                 " );");
     }
 

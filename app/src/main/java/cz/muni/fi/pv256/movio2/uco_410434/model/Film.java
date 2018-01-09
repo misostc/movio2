@@ -13,7 +13,7 @@ import cz.muni.fi.pv256.movio2.uco_410434.util.JsonDateDeserializer;
 
 public class Film implements FilmsListItem, Parcelable {
 
-    public static final Creator<Film> CREATOR = new Creator<Film>() {
+    public static final Parcelable.Creator<Film> CREATOR = new Parcelable.Creator<Film>() {
         @Override
         public Film createFromParcel(Parcel source) {
             return new Film(source);
@@ -37,6 +37,7 @@ public class Film implements FilmsListItem, Parcelable {
     }
 
     protected Film(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.title = in.readString();
         this.releaseDate = (DateTime) in.readSerializable();
         this.voteAverage = in.readDouble();
@@ -45,7 +46,7 @@ public class Film implements FilmsListItem, Parcelable {
     }
 
     public String getBackdropURL() {
-        return "http://image.tmdb.org/t/p/w300/" + getBackdropPath();
+        return "http://image.tmdb.org/t/p/w250_and_h141_bestv2/" + getBackdropPath();
     }
 
     public Long getId() {
@@ -115,6 +116,7 @@ public class Film implements FilmsListItem, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
         dest.writeString(this.title);
         dest.writeSerializable(this.releaseDate);
         dest.writeDouble(this.voteAverage);

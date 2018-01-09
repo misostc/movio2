@@ -8,16 +8,10 @@
     android:showDividers="middle"
     tools:context="cz.muni.fi.pv256.movio2.uco_410434.ui.FilmListActivity">
 
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment_film_list"
-        android:name="cz.muni.fi.pv256.movio2.uco_410434.ui.OnlineFilmListFragment"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/film_list_container"
         android:layout_width="@dimen/item_width"
-        android:layout_height="match_parent"
-        tools:context="cz.muni.fi.pv256.movio2.uco_410434.ui.OnlineFilmListFragment"
-        tools:layout="@android:layout/list_content" />
-
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/film_detail_container"

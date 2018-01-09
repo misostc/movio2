@@ -68,6 +68,7 @@ public class PersistedFilmManager {
         }
 
         contentResolver.delete(FilmEntry.CONTENT_URI, WHERE_ID, new String[]{String.valueOf(film.getId())});
+        film.setId(null);
     }
 
     private ContentValues prepareFilmValues(Film film) {

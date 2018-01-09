@@ -102,30 +102,41 @@ public class FilmDetailFragment extends Fragment {
             releaseDateView.setText(item.getReleaseDate().toLocalDate().toString());
 
             if (item.getId() == null) {
-                actionButton.setImageResource(R.drawable.icon_save);
-                actionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        view.setEnabled(false);
-                        view.setAlpha(0.5f);
-                        saveFilm(item);
-                        actionButton.hide();
-                    }
-                });
+                setActionSave();
             } else {
-                actionButton.setImageResource(R.drawable.icon_delete);
-                actionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        view.setEnabled(false);
-                        view.setAlpha(0.5f);
-                        deleteFilm(item);
-                    }
-                });
+                setActionDelete();
             }
         }
 
         return rootView;
+    }
+
+    private void setActionDelete() {
+        actionButton.setEnabled(true);
+        actionButton.setAlpha(1f);
+        actionButton.setImageResource(R.drawable.icon_delete);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setEnabled(false);
+                view.setAlpha(0.5f);
+                deleteFilm(item);
+            }
+        });
+    }
+
+    private void setActionSave() {
+        actionButton.setEnabled(true);
+        actionButton.setAlpha(1f);
+        actionButton.setImageResource(R.drawable.icon_save);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setEnabled(false);
+                view.setAlpha(0.5f);
+                saveFilm(item);
+            }
+        });
     }
 
     private void deleteFilm(final Film item) {
@@ -136,7 +147,7 @@ public class FilmDetailFragment extends Fragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        actionButton.hide();
+                        setActionSave();
                     }
                 });
                 return null;
@@ -152,7 +163,7 @@ public class FilmDetailFragment extends Fragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        actionButton.hide();
+                        setActionDelete();
                     }
                 });
                 return null;
